@@ -6,3 +6,5 @@ Tools Used:
 1. Java
 2. Selenium
 3. Maven
+
+In order to run go to src/test/java/org/skynet/naveenchallenge2/MainPageTest.java and run the main method, easy no?
