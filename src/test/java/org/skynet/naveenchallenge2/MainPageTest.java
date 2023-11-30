@@ -35,7 +35,7 @@ public class MainPageTest {
     String[] mFilter3 = {"Operating System","all"};
 
     //we can select any string array from above
-    selectFilter(mFilter3);
+    selectFilter(mFilter);
 
     }
 
@@ -47,6 +47,7 @@ public class MainPageTest {
     By allOptionsInsideMainFilterLocator= By.xpath(".//ancestor::fieldset[1]//mat-checkbox");
     By checkBoxForRelativeItemLocator = By.xpath(".//span[@class='mat-checkbox-frame']");
     By checkBoxLabelRelativeItemLocator = By.xpath(".//span[@class='mat-checkbox-label']");
+    Actions actions = new Actions(mDriver);
 
     wait.until(ExpectedConditions.visibilityOfAllElements(mDriver.findElements(mainFilterLocator)));
 
@@ -62,29 +63,29 @@ public class MainPageTest {
                 break;
             }
     }
+    // checks if itemsundermainfilter
+    if (itemsUnderMainFilter == null){
+            Assert.fail("failed to get sub categories under main category");
+    }
 
 
     //check all the items under main filter and compares from the second item in a string array as first item is the name of main filter
 
     for (int i = 1; i<mFilter.length;i++){
-
         String currentItem = mFilter[i];
 
-        // if the current item is all then mark all items in that main filter
+        // if the first item is all then mark all items in that main filter
 
-        if (currentItem == "all"){
+        if(1==i && "all".equals(currentItem)) {
             for (WebElement item : itemsUnderMainFilter){
-                Actions actions = new Actions(mDriver);
                 actions.moveToElement(item.findElement(checkBoxForRelativeItemLocator)).click().build().perform();
             }
             break;
         }
-
         // else only those which are included from the string array's second item
         else {
             for (WebElement item : itemsUnderMainFilter){
                 if ( item.findElement(checkBoxLabelRelativeItemLocator).getText().equalsIgnoreCase(currentItem)){
-                    Actions actions = new Actions(mDriver);
                     actions.moveToElement(item.findElement(checkBoxForRelativeItemLocator)).click().build().perform();
                 }
             }
